@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "stats",
+  "info": {
+    "singularName": "stat",
+    "pluralName": "stats",
+    "displayName": "Stat "
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "generatedCount": {
+      "type": "integer"
+    },
+    "lastGeneratedAt": {
+      "type": "datetime"
+    }
+  }
+}

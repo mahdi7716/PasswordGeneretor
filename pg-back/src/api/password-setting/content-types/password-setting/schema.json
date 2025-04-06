@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "password_settings",
+  "info": {
+    "singularName": "password-setting",
+    "pluralName": "password-settings",
+    "displayName": "PasswordSetting",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "length": {
+      "type": "integer",
+      "required": false
+    },
+    "useUppercase": {
+      "type": "boolean"
+    },
+    "useLowercase": {
+      "type": "boolean"
+    },
+    "useNumbers": {
+      "type": "boolean"
+    },
+    "useSymbols": {
+      "type": "boolean"
+    }
+  }
+}
