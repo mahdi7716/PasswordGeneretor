@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "password_configs",
+  "info": {
+    "singularName": "password-config",
+    "pluralName": "password-configs",
+    "displayName": "password-config",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "length": {
+      "type": "integer"
+    },
+    "include_uppercase": {
+      "type": "boolean"
+    },
+    "include_lowercase": {
+      "type": "boolean"
+    },
+    "include_numbers": {
+      "type": "boolean"
+    },
+    "include_symbols": {
+      "type": "boolean"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}
