@@ -298,5 +298,7 @@ module.exports = createCoreController('api::service-password.service-password', 
       console.error(err);
       ctx.internalServerError("An error occurred while fetching the password.");
     }
+    console.log("Entry:", entry);
+console.log("User:", user);
   },
 }));
