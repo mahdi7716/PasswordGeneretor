@@ -11,7 +11,7 @@ module.exports = {
       },
       info: {
         name: 'customFindMine',
-        description: 'Get all passwords belonging to the logged-in user only',
+        description: 'Get passwords for the current user',
         type: 'content-api',
       },
     },

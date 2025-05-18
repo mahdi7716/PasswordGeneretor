@@ -6,14 +6,11 @@ module.exports = {
   routes: [
     ...customRoutes.routes,
     {
-      method: 'POST',
+      method: 'GET',
       path: '/service-passwords',
-      handler: 'service-password.create',
+      handler: 'service-password.find',
       config: {
-        policies: [],
-        auth: {
-          scope: ['plugin::users-permissions.user'],
-        },
+        auth: { scope: ['plugin::users-permissions.user'] },
       },
     },
     {
@@ -21,10 +18,15 @@ module.exports = {
       path: '/service-passwords/:id',
       handler: 'service-password.findOne',
       config: {
-        policies: [],
-        auth: {
-          scope: ['plugin::users-permissions.user'],
-        },
+        auth: { scope: ['plugin::users-permissions.user'] },
+      },
+    },
+    {
+      method: 'POST',
+      path: '/service-passwords',
+      handler: 'service-password.create',
+      config: {
+        auth: { scope: ['plugin::users-permissions.user'] },
       },
     },
     {
@@ -32,10 +34,7 @@ module.exports = {
       path: '/service-passwords/:id',
       handler: 'service-password.update',
       config: {
-        policies: [],
-        auth: {
-          scope: ['plugin::users-permissions.user'],
-        },
+        auth: { scope: ['plugin::users-permissions.user'] },
       },
     },
     {
@@ -43,10 +42,7 @@ module.exports = {
       path: '/service-passwords/:id',
       handler: 'service-password.delete',
       config: {
-        policies: [],
-        auth: {
-          scope: ['plugin::users-permissions.user'],
-        },
+        auth: { scope: ['plugin::users-permissions.user'] },
       },
     },
   ],

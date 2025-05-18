@@ -1,62 +1,54 @@
 'use strict';
 
-const { createCoreController } = require('@strapi/strapi').factories;
-
-module.exports = createCoreController('api::service-password.service-password', ({ strapi }) => ({
-
-  // گرفتن فقط رمزهای کاربر لاگین شده (برای /service-passwords)
-  async find(ctx) {
-    const user = ctx.state.user;
-
-    if (!user) {
-      return ctx.unauthorized('You must be logged in to access your passwords.');
-    }
-
-    const entries = await strapi.entityService.findMany('api::service-password.service-password', {
-      filters: { user: user.id },
-      populate: ['user'],
-    });
-
-    return { data: entries };
-  },
-
-  // ایجاد رمز جدید با اتصال به کاربر لاگین شده
-  async create(ctx) {
-    const user = ctx.state.user;
-
-    if (!user) {
-      return ctx.unauthorized('You must be logged in to create a password.');
-    }
-
-    const { title, username, password, url } = ctx.request.body.data;
-
-    const newEntry = await strapi.entityService.create('api::service-password.service-password', {
-      data: {
-        title,
-        username,
-        password,
-        url,
-        user: user.id,
+module.exports = {
+  routes: [
+    {
+      method: 'GET',
+      path: '/service-passwords',
+      handler: 'service-password.find',
+      config: {
+        auth: { scope: ['plugin::users-permissions.user'] },
       },
-    });
-
-    return { data: newEntry };
-  },
-
-  // مسیر اختصاصی برای گرفتن رمزهای خود کاربر — /service-passwords/me
-  async customFindMine(ctx) {
-    const user = ctx.state.user;
-
-    if (!user) {
-      return ctx.unauthorized('You must be logged in to access your own passwords.');
-    }
-
-    const entries = await strapi.entityService.findMany('api::service-password.service-password', {
-      filters: { user: user.id },
-      populate: ['user'],
-    });
-
-    return { data: entries };
-  },
-
-}));
+    },
+    {
+      method: 'GET',
+      path: '/service-passwords/:id',
+      handler: 'service-password.findOne',
+      config: {
+        auth: { scope: ['plugin::users-permissions.user'] },
+      },
+    },
+    {
+      method: 'POST',
+      path: '/service-passwords',
+      handler: 'service-password.create',
+      config: {
+        auth: { scope: ['plugin::users-permissions.user'] },
+      },
+    },
+    {
+      method: 'PUT',
+      path: '/service-passwords/:id',
+      handler: 'service-password.update',
+      config: {
+        auth: { scope: ['plugin::users-permissions.user'] },
+      },
+    },
+    {
+      method: 'DELETE',
+      path: '/service-passwords/:id',
+      handler: 'service-password.delete',
+      config: {
+        auth: { scope: ['plugin::users-permissions.user'] },
+      },
+    },
+    {
+      method: 'GET',
+      path: '/service-passwords/me',
+      handler: 'service-password.customFindMine',
+      config: {
+        auth: { mode: 'authenticated' },
+      },
+    },
+  ],
+};

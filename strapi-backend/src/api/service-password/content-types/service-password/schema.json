@@ -23,10 +23,10 @@
       "target": "api::password-config.password-config"
     },
     "user": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
-    },
+  "type": "relation",
+  "relation": "manyToOne",
+  "target": "plugin::users-permissions.user"
+},
     "createdat": {
       "type": "datetime"
     }
