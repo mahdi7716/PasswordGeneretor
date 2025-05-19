@@ -7,7 +7,7 @@ module.exports = {
       path: '/service-passwords',
       handler: 'service-password.find',
       config: {
-        auth: { scope: ['plugin::users-permissions.user'] },
+        auth: { mode: 'authenticated' },
       },
     },
     {
@@ -15,7 +15,7 @@ module.exports = {
       path: '/service-passwords/:id',
       handler: 'service-password.findOne',
       config: {
-        auth: { scope: ['plugin::users-permissions.user'] },
+        auth: { mode: 'authenticated' },
       },
     },
     {
@@ -23,7 +23,7 @@ module.exports = {
       path: '/service-passwords',
       handler: 'service-password.create',
       config: {
-        auth: { scope: ['plugin::users-permissions.user'] },
+        auth: { mode: 'authenticated' },
       },
     },
     {
@@ -31,7 +31,7 @@ module.exports = {
       path: '/service-passwords/:id',
       handler: 'service-password.update',
       config: {
-        auth: { scope: ['plugin::users-permissions.user'] },
+        auth: { mode: 'authenticated' },
       },
     },
     {
@@ -39,7 +39,7 @@ module.exports = {
       path: '/service-passwords/:id',
       handler: 'service-password.delete',
       config: {
-        auth: { scope: ['plugin::users-permissions.user'] },
+        auth: { mode: 'authenticated' },
       },
     },
     {
@@ -48,6 +48,11 @@ module.exports = {
       handler: 'service-password.customFindMine',
       config: {
         auth: { mode: 'authenticated' },
+      },
+      info: {
+        name: 'customFindMine',
+        description: 'Get passwords for the current user',
+        type: 'content-api',
       },
     },
   ],

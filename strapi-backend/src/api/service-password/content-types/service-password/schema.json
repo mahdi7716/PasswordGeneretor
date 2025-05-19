@@ -22,11 +22,11 @@
       "relation": "oneToOne",
       "target": "api::password-config.password-config"
     },
-    "user": {
-  "type": "relation",
-  "relation": "manyToOne",
-  "target": "plugin::users-permissions.user"
-},
+    "users_permissions_users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
+    },
     "createdat": {
       "type": "datetime"
     }
