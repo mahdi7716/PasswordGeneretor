@@ -64,6 +64,12 @@
       "target": "plugin::users-permissions.role",
       "inversedBy": "users",
       "configurable": false
-    }
+    },
+ "service_passwords": {
+  "type": "relation",
+  "relation": "oneToMany",
+  "target": "api::service-password.service-password",
+  "mappedBy": "user"
+}
   }
 }

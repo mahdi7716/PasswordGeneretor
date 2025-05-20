@@ -440,8 +440,7 @@ export interface ApiServicePasswordServicePassword
   extends Struct.CollectionTypeSchema {
   collectionName: 'service_passwords';
   info: {
-    description: '';
-    displayName: 'service-password';
+    displayName: 'Service Password';
     pluralName: 'service-passwords';
     singularName: 'service-password';
   };
@@ -464,15 +463,15 @@ export interface ApiServicePasswordServicePassword
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    users_permissions_users: Schema.Attribute.Relation<
-      'oneToMany',
+    user: Schema.Attribute.Relation<
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
-    value: Schema.Attribute.String;
+    value: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -961,6 +960,10 @@ export interface PluginUsersPermissionsUser
     role: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.role'
+    >;
+    service_passwords: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service-password.service-password'
     >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

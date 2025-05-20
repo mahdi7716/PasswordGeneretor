@@ -4,31 +4,32 @@
   "info": {
     "singularName": "service-password",
     "pluralName": "service-passwords",
-    "displayName": "service-password",
-    "description": ""
+    "displayName": "Service Password"
   },
   "options": {
     "draftAndPublish": false
   },
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "value": {
-      "type": "string"
+      "type": "string",
+      "required": true
+    },
+    "createdat": {
+      "type": "datetime"
     },
     "config": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::password-config.password-config"
     },
-    "users_permissions_users": {
+    "user": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToOne",
       "target": "plugin::users-permissions.user"
-    },
-    "createdat": {
-      "type": "datetime"
     }
   }
 }
