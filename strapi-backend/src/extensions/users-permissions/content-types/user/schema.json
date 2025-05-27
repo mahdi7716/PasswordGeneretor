@@ -65,11 +65,26 @@
       "inversedBy": "users",
       "configurable": false
     },
- "service_passwords": {
+    "profileImage": {
+      "allowedTypes": [
+        "files",
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "passwords": {
   "type": "relation",
   "relation": "oneToMany",
-  "target": "api::service-password.service-password",
-  "mappedBy": "user"
-}
+  "target": "api::password.password",
+  "mappedBy": "users_permissions_user"
+},
+
+    "category": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::category.category",
+      "mappedBy": "users_permissions_user"
+    }
   }
 }

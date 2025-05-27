@@ -369,14 +369,13 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiPasswordConfigPasswordConfig
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'password_configs';
+export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
+  collectionName: 'categories';
   info: {
     description: '';
-    displayName: 'password-config';
-    pluralName: 'password-configs';
-    singularName: 'password-config';
+    displayName: 'Category';
+    pluralName: 'categories';
+    singularName: 'category';
   };
   options: {
     draftAndPublish: false;
@@ -385,93 +384,69 @@ export interface ApiPasswordConfigPasswordConfig
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    include_lowercase: Schema.Attribute.Boolean;
-    include_numbers: Schema.Attribute.Boolean;
-    include_symbols: Schema.Attribute.Boolean;
-    include_uppercase: Schema.Attribute.Boolean;
-    length: Schema.Attribute.Integer;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::password-config.password-config'
+      'api::category.category'
     > &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    passwords: Schema.Attribute.Relation<'oneToMany', 'api::password.password'>;
     publishedAt: Schema.Attribute.DateTime;
+    sug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    user: Schema.Attribute.Relation<
-      'oneToOne',
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
   };
 }
 
-export interface ApiQrCodeQrCode extends Struct.CollectionTypeSchema {
-  collectionName: 'qr_codes';
+export interface ApiPasswordPassword extends Struct.CollectionTypeSchema {
+  collectionName: 'passwords';
   info: {
     description: '';
-    displayName: 'QR Code';
-    pluralName: 'qr-codes';
-    singularName: 'qr-code';
+    displayName: 'Password';
+    pluralName: 'passwords';
+    singularName: 'password';
   };
   options: {
     draftAndPublish: false;
   };
   attributes: {
+    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    image: Schema.Attribute.Media<'images' | 'files', true>;
+    includeLowercase: Schema.Attribute.Boolean & Schema.Attribute.Required;
+    includeNumbers: Schema.Attribute.Boolean;
+    includeSymbols: Schema.Attribute.Boolean;
+    includeUppercase: Schema.Attribute.Boolean & Schema.Attribute.Required;
+    Length: Schema.Attribute.Integer & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::qr-code.qr-code'
+      'api::password.password'
     > &
       Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiServicePasswordServicePassword
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'service_passwords';
-  info: {
-    displayName: 'Service Password';
-    pluralName: 'service-passwords';
-    singularName: 'service-password';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    config: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::password-config.password-config'
-    >;
-    createdat: Schema.Attribute.DateTime;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::service-password.service-password'
-    > &
+    minNumbers: Schema.Attribute.Integer;
+    minSymbols: Schema.Attribute.Integer;
+    Password: Schema.Attribute.String &
+      Schema.Attribute.Required &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    qrCode: Schema.Attribute.Media<'images' | 'files'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    user: Schema.Attribute.Relation<
+    UserName: Schema.Attribute.String & Schema.Attribute.Required;
+    users_permissions_user: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'
     >;
-    value: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -933,6 +908,7 @@ export interface PluginUsersPermissionsUser
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    category: Schema.Attribute.Relation<'oneToMany', 'api::category.category'>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
@@ -954,16 +930,14 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    passwords: Schema.Attribute.Relation<'oneToMany', 'api::password.password'>;
+    profileImage: Schema.Attribute.Media<'files' | 'images'>;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
     role: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.role'
-    >;
-    service_passwords: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::service-password.service-password'
     >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -987,9 +961,8 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::password-config.password-config': ApiPasswordConfigPasswordConfig;
-      'api::qr-code.qr-code': ApiQrCodeQrCode;
-      'api::service-password.service-password': ApiServicePasswordServicePassword;
+      'api::category.category': ApiCategoryCategory;
+      'api::password.password': ApiPasswordPassword;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

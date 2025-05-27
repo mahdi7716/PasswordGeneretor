@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "categories",
+  "info": {
+    "singularName": "category",
+    "pluralName": "categories",
+    "displayName": "Category",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "sug": {
+      "type": "uid",
+      "required": true,
+      "targetField": "name"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "category"
+    },
+    "passwords": {
+  "type": "relation",
+  "relation": "oneToMany",
+  "target": "api::password.password",
+  "mappedBy": "category"
+}
+  }
+}

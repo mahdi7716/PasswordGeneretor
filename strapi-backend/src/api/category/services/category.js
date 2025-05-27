@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * qr-code service
+ * category service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::qr-code.qr-code');
+module.exports = createCoreService('api::category.category');

@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * qr-code router
+ * category router
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::qr-code.qr-code');
+module.exports = createCoreRouter('api::category.category');

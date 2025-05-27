@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * qr-code controller
+ * category controller
  */
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::qr-code.qr-code');
+module.exports = createCoreController('api::category.category');
